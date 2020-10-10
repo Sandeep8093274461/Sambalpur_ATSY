@@ -1,0 +1,57 @@
+<div class="main-content-container container-fluid px-4">
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0 heading">
+            <!-- <h3 class="page-title">Create zone and assign to RRT</h3> -->
+            <div class="row">
+                <div class="col-3"><img class="header-icon" src="assets/pulseIcon.png" alt=""></div>
+                <div class="col-9"><h5 class="heading-text">REMOTE HEALTH CARES</h5></div>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="entryForm">
+    <div class="row no-gutters field">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <div class="row">
+                <div class="col-4"><img class="field-icon" src="assets/t13.png" alt=""></div>
+                <div class="col-8">
+                    <h5 class="field-text">Enter your body Temperature</h5>
+                    <input type="text" class="form-control field-input" placeholder="In Fahrenheit" formControlName="temerature">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters field">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <div class="row">
+                <div class="col-4"><img class="field-icon" src="assets/pulseCheck.png" alt=""></div>
+                <div class="col-8">
+                    <h5 class="field-text">Enter your <br>Oxygen / Pulse</h5>
+                    <div class="row">
+                        <div class="col-6 left-input-field"><input type="text" class="form-control field-input" placeholder="Saturation" formControlName="oxySaturation"></div>
+                        <div class="col-6 right-input-field"><input type="text" class="form-control field-input" placeholder="Pulse rate" formControlName="oxyPulseRate"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters field">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <div class="row">
+                <div class="col-4"><img class="field-icon" src="assets/bpIcon.png" alt=""></div>
+                <div class="col-8">
+                    <h5 class="field-text">Enter your Blood Pressure</h5>
+                    <div class="row">
+                        <div class="col-6 left-input-field"><input type="text" class="form-control field-input" placeholder="Upper" formControlName="bpSystolic"></div>
+                        <div class="col-6 right-input-field"><input type="text" class="form-control field-input" placeholder="Lower" formControlName="bpDiastolic"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+    <br><br>
+    <div class="row">
+        <div class="col-6"><button class="btn btn-primary btn-md" routerLink="/patientDashboard"><i class="fas fa-arrow-left"></i> Back</button></div>
+        <div class="col-6 text-right"><button class="btn btn-primary btn-md" (click)="addHealthInfo()">SUBMIT</button></div>
+    </div>
+</div>

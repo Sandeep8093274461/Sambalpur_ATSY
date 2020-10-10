@@ -1,0 +1,115 @@
+<div class="container-fluid">
+    <div class="row">
+  
+        <app-admin-sidebar></app-admin-sidebar>
+  
+      <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+
+
+
+<app-admin-header></app-admin-header>
+<div class="main-content-container container-fluid px-4">
+  <div class="page-header row no-gutters py-4">
+    <div class="col-8 text-center text-sm-left mb-0">
+        <h3 class="page-title">Manage zones</h3>
+    </div>
+    <div class="col-4 text-right text-sm-left mb-0">
+      <button class="btn btn-primary float-right" (click)="previewAllZones()">Preview all zones</button>
+  </div>
+  </div>
+  <div class="card card-small mb-4">
+    <div class="card-header border-bottom bg-primary">
+      <h6 class="m-0">Preview zone</h6>
+    </div>
+    <div class="card-body p-0 pb-3 text-center">
+            <h6 class="no-record-found" *ngIf="zoneList.length == 0">No record found</h6>
+            <table class="table table-hover" *ngIf="zoneList.length != 0">
+              <thead class="bg-light">
+                <tr class="border-1">
+                    <th>SL.</th>
+                    <th>Created on</th>
+                    <th>Zone name <br> ID</th>
+                    <th>Assign to</th>
+                    <th>No. of points</th>
+                    <th>Preview</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let x of zoneList; index as i">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ x.addedOn | date: 'medium' }}</td>
+                    <td>
+                      {{ x.zoneName }} <br>
+                      {{ x.zoneId }}
+                    </td>
+                    <td>
+                      {{ x.rrtName }}
+                      <br>
+                      {{ x.rrtCode }}
+                    </td>
+                    <td>{{ x.polygonPoints.length }}</td>
+                    <td>
+                      <button class="btn btn-outline-primary" (click)="previewSingleZone(x);"><i class="fas fa-map"></i></button>
+                    </td>
+                    <td>
+                      <button class="btn btn-outline-danger" (click)="setX(x);" data-toggle="modal" data-target="#removeModal" ><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+      </div>
+  </div>
+  <div class="card card-small mb-4">
+    <div class="card-header border-bottom bg-primary">
+      <h6 class="m-0">All zone list</h6>
+    </div>
+    <div class="card-body p-0 pb-3 text-center">
+      <div id="previewMap" class="design-map-lg"></div>
+    </div>
+  </div>
+  <div class="modal fade" id="removeModal" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="modal">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title" id="ModalLabel ">Confirm to remove:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <table class="table table-hover">
+              <tbody>
+                  <tr >
+                      <td>Zone ID: </td>
+                      <td>{{ x.zoneId }}</td>
+                  </tr>
+                  <tr >
+                    <td>Name of the Zone: </td>
+                    <td>{{ x.zoneName }}</td>
+                </tr>
+                <tr >
+                  <td>Created on: </td>
+                  <td>{{ x.addedOn  | date: 'medium' }}</td>
+              </tr>
+                <tr >
+                  <td>Assign to (RRT): </td>
+                  <td>{{ x.rrtName }} ({{ x.rrtCode }})</td>
+              </tr>
+              </tbody>
+              </table>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" (click)="removeZone();"  data-dismiss="modal">Remove</button>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<app-admin-footer></app-admin-footer>
+
+</main>
+</div>
+</div>

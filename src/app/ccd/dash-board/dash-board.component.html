@@ -1,0 +1,88 @@
+<div class="container-fluid">
+    <div class="row">
+
+        <app-ccd-sidebar></app-ccd-sidebar>
+
+        <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+            <app-ccd-header></app-ccd-header>
+            <div class="main-content-container container-fluid px-4">
+                <div class="page-header row no-gutters py-4">
+                    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                        <h3 class="page-title">Dashboard</h3>
+                    </div>
+                </div>
+              <div class="row" style="height: auto;">
+
+                    <div class="col-lg-12" >
+                        <div class="card card-small mb-4">
+                            <app-isolationactive-case></app-isolationactive-case>
+                        </div>
+                    </div>
+
+
+                </div> 
+                <br>
+                <div>
+                    <app-zone-patient-location></app-zone-patient-location>
+                </div>
+                <br>
+                <div class="row" style="height: auto;"  >
+                    <div class="col-lg-6">
+                        <div class="card card-small mb-4">
+                            <app-piechart ></app-piechart>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card card-small mb-4">
+                            <app-piechart-for-male-female></app-piechart-for-male-female>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row" style="height: auto;">
+                    <div class="col-lg-6">
+                        <div class="card card-small mb-4">
+                            <app-piechart-age-wise></app-piechart-age-wise>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card card-small mb-4">
+                            <app-agewisemalefemale></app-agewisemalefemale>
+                           
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row" style="height: auto;">
+                    <div class="col-lg-6">
+                        <div class="card card-small mb-4">
+                            <app-covidwarrior></app-covidwarrior>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card card-small mb-4">
+                            <app-kitgivenchart></app-kitgivenchart>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row" style="height: auto;">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                        <div class="card card-small mb-4">
+                            <app-chat-call-history></app-chat-call-history>
+                        </div>
+                    </div>
+                    <div class="col-lg-3"></div>
+
+                </div>
+
+
+            </div>
+
+            <app-ccd-footer></app-ccd-footer>
+
+        </main>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+<div class="container-fluid">
+    <div class="row">
+  
+        <app-admin-sidebar></app-admin-sidebar>
+  
+      <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+
+
+
+<app-admin-header></app-admin-header>
+
+<div class="main-content-container container-fluid px-4">
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <h3 class="page-title">Create zone and assign to RRT</h3>
+        </div>
+    </div>
+    <div class="card card-small mb-4">
+            <div class="card-header border-bottom bg-primary">
+                <h6 class="m-0">Create new zone</h6>
+            </div>
+            <div class="card-body list-group list-group-flush">
+                <div id="map" style="height: 430px;width: 100%;"></div>
+            </div>
+            <div class="card-footer">
+                <div class="text-right">
+                    <button class="btn btn-primary" (click)="resetPolygon();">Reset</button> &nbsp;
+                    <button class="btn btn-primary" [disabled]="polygonPoints.length <= 2" (click)="assignToSurveyOffice()" data-target="#assignToSurveyOffice" data-toggle="modal">Create zone</button>
+                </div>
+            </div>
+    </div>
+</div>
+<div class="modal fade" id="assignToSurveyOffice" tabindex="1 " role="dialog " aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog " role="document1">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title" id="ModalLabel ">Zone assign to RRT</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" [formGroup]="assignAreaForm">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <label class=" col-form-label" for="name">Zone name :</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" formControlName="zoneName" placeholder="Enter name of the zone.">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <label class=" col-form-label" for="name">RR Team :</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <select class="form-control" [(ngModel)]="seletctedRrt" [ngModelOptions]="{standalone: true}" (change)="addRrtToForm($event.target.selectedIndex)">
+                                <option value="" selected disabled>--select--</option>
+                                <option *ngFor="let x of rrtList" [value]="x.rrtCode">{{ x.name }} ({{x.rrtCode}})</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <label class=" col-form-label" for="name">No of points :</label>
+                        </div>
+                        <div class="col-lg-8">
+                            <label class=" col-form-label" for="name">{{ polygonPoints.length }}</label>
+                        </div>
+
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="assign();"
+                    data-dismiss="modal">Assign</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<app-admin-footer></app-admin-footer>
+
+</main>
+</div>
+</div>

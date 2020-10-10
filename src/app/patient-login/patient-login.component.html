@@ -1,0 +1,24 @@
+<div class="main-content-container container-fluid px-4">
+
+    <div class="no-gutters field" *ngIf="!storagePatientID">
+        <div class="text-center text-sm-left mb-0">
+            <h5 class="field-text">Enter your ID:</h5>
+            <div class=""><input type="text" class="form-control field-input" placeholder="Unique ID." [(ngModel)]="enterPatientID"></div><br>
+            <div class="text-right"><button class="btn btn-primary btn-md" (click)="setPatientId();">Proceed</button></div>
+        </div>
+    </div>
+    
+    <div class="no-gutters field" >
+        <div class="text-center text-sm-left mb-0">
+            <h5 class="field-text">Show your face to match:</h5>
+            <div id="videoTag">
+                <video #video class="vid" id="video" autoplay></video>
+                <canvas class="detectBoundingBox" id="canvas"></canvas>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="col-6"><button class="btn btn-primary btn-md" routerLink="/viewPage" (click)="stopCamera();"><i class="fas fa-arrow-left"></i> Back</button></div>
+    </div>
+</div>

@@ -1,0 +1,429 @@
+<div class="container-fluid">
+    <div class="row">
+  
+        <app-ccd-sidebar></app-ccd-sidebar>
+  
+      <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+
+
+
+<app-ccd-header></app-ccd-header>
+
+<div class="main-content-container container-fluid px-4">
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <h3 class="page-title">Update patient details</h3>
+
+        </div>
+    </div>
+    <div class="row" *ngIf="div1">
+        <div class="col">
+            <div class="card card-small mb-4">
+                <div class="card-header border-bottom bg-primary search-header">
+                    <div class="row">
+                        <div class="col-6">
+                            <h6 class="m-0">Patient list</h6>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="card-body p-0 pb-3 text-center">
+
+                    <table class="table mb-0 table-responsive-sm table-bordered table-striped">
+                        <thead class="bg-light">
+                            <tr class="border-1">
+                                <th>SL.</th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Mobile no.</th>
+                                <th>Gender</th>
+                                <th>Covid warrior</th>
+                                <th>View</th>
+                                <th>Edit</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let x of Patientdata; index as i">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ x.patientId }}</td>
+                                <td>{{ x.patientName }}</td>
+                                <td>{{ x.age }}</td>
+                                <td>{{ x.mobileno }}</td>
+                                <td>{{ x.gender }}</td>
+                                <td>{{ x.covid }}</td>
+                                <td>
+                                    <button class="btn btn-outline-success" type="submit"
+                                        (click)="viewPatientsDetail(x)"> <i class="fas fa-eye"
+                                            aria-hidden="true"></i></button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-primary" type="submit" data-toggle="modal"
+                                        data-target="#editdeliverystaffdetailsModal" data-backdrop="static"
+                                        data-keyboard="false" (click)="viewEditDetail(x);"> <i class="fas fa-edit"
+                                            aria-hidden="true"></i></button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-danger" type="submit" data-toggle="modal"
+                                        data-target="#deletedeliverystaffdetailsModal" data-backdrop="static"
+                                        data-keyboard="false" (click)="viewDeleteDetail(x);"> <i
+                                            class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="div2">
+        <div class="col">
+            <div class="card card-small mb-4">
+                <div class="card-header border-bottom bg-primary search-header">
+                    <div class="row">
+                        <div class="col-6">
+                            <h6 class="m-0">Patient list</h6>
+                        </div>
+                        <!-- <div class="col-2"></div>
+                          <div class="col-4">
+                            <div class="input-group mb-3">
+                                <input class="form-control " type="text" [(ngModel)]="searchString" placeholder="Enter the employee name" required>
+                              <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
+                              </div>
+                            </div>
+                          </div> -->
+                    </div>
+
+
+                </div>
+                <div class="card-body p-0 pb-3 text-center" style="margin-left: 20px;">
+
+                    <div class="row" style="text-align: left;">
+                        <div class="col-lg-2 ">
+                            &nbsp; Register No. :
+                        </div>
+
+                        <div class="col-lg-4 ">
+                            <h6>{{viewDetail.patientSNo}}</h6>
+                        </div>
+                        <div class="col-lg-2">
+                            &nbsp; Id :
+                        </div>
+                        <div class="col-lg-4">
+                            <h6>{{viewDetail.id || '--'}}</h6>
+                        </div>
+
+                    </div>
+                    <div class="row" style="text-align: left;">
+                        <div class="col-lg-2 ">
+                            &nbsp; Patient id :
+                        </div>
+
+                        <div class="col-lg-4 ">
+                            <h6>{{viewDetail.patientId}}</h6>
+                        </div>
+                        <div class="col-lg-2">
+                            &nbsp; SRF id :
+                        </div>
+                        <div class="col-lg-4">
+                            <h6>{{viewDetail.srfId || '--'}}</h6>
+                        </div>
+
+                    </div>
+                    <div class="row" style="text-align: left;">
+                        <div class="col-lg-2 ">
+                            &nbsp; Patient name:
+                        </div>
+
+                        <div class="col-lg-4 ">
+                            <h6>{{viewDetail.patientName}}</h6>
+                        </div>
+                        <div class="col-lg-2">
+                            &nbsp; Age:
+                        </div>
+                        <div class="col-lg-4">
+                            <h6>{{viewDetail.age}}</h6>
+                        </div>
+
+                    </div>
+                    <div class="row" style="text-align: left;">
+                        <div class="col-lg-2 ">
+                            &nbsp; Mobile number:
+                        </div>
+
+                        <div class="col-lg-4 ">
+                            <h6>{{viewDetail.mobileno}}</h6>
+                        </div>
+                        <div class="col-lg-2">
+                            &nbsp; Gender :
+                        </div>
+                        <div class="col-lg-4">
+                            <h6>{{viewDetail.gender}}</h6>
+                        </div>
+
+                    </div>
+                    <div class="row" style="text-align: left;">
+                        <div class="col-lg-2 ">
+                            &nbsp; Symtomatic :
+                        </div>
+
+                        <div class="col-lg-4 ">
+                            <h6>{{viewDetail.know}}</h6>
+                        </div>
+                        <div class="col-lg-2">
+                            &nbsp; Plot no. :
+                        </div>
+                        <div class="col-lg-4">
+                            <h6>{{viewDetail.plot}}</h6>
+                        </div>
+
+                    </div>
+                    <div class="row" style="text-align: left;">
+                        <div class="col-lg-2 ">
+                            &nbsp; Covid warrior:
+                        </div>
+
+                        <div class="col-lg-4 ">
+                            <h6>{{viewDetail.covid}}</h6>
+                        </div>
+                        <div class="col-lg-2">
+                            &nbsp; Block :
+                        </div>
+                        <div class="col-lg-4">
+                            <h6>{{viewDetail.block}}</h6>
+                        </div>
+
+                    </div>
+                    <div class="row" style="text-align: left;" *ngIf="viewDetail.remark">
+                        <div class="col-lg-2 ">
+                            &nbsp; Remark:
+                        </div>
+                        <div class="col-lg-10">
+                            <h6>{{viewDetail.remark}}</h6>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-md btn-primary" (click)="back()">
+                        Back</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <h3 class="page-title">All Patient List</h3>
+        <button (click)="div1Function()">2</button> -->
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="modal fade" id="editdeliverystaffdetailsModal" tabindex="1 " role="dialog "
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog " role="document1">
+                    <div class="modal-content">
+                        <div class="modal-header editheader bg-primary">
+                            <h5 class="modal-title" id="ModalLabel ">Edit Patient Details</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" [formGroup]="patientEntryForm">
+                                <div class="form-group row ">
+                                    <label class="col-md-4 col-form-label text-right " for=" ">Emp ID. :</label>
+                                    <label class="col-md-8 col-form-label " for=" ">{{viewDetail.patientSNo}}</label>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-md-4 col-form-label text-right " for=" ">Patient id :</label>
+                                    <input class="form-control col-md-8" type="text" name="patientId"
+                                        formControlName="patientId" placeholder="" required>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-md-4 col-form-label text-right " for=" ">Id :</label>
+                                    <input class="form-control col-md-8" type="text" name="id" formControlName="id"
+                                        placeholder="" required>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-md-4 col-form-label text-right " for=" ">SRF id :</label>
+                                    <input class="form-control col-md-8" type="text" name="srfId"
+                                        formControlName="srfId" placeholder="">
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-md-4 col-form-label text-right " for=" ">Patient name :</label>
+                                    <input class="form-control col-md-8" type="text" name="patientName"
+                                        formControlName="patientName" placeholder="" required>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-md-4 col-form-label text-right " for=" ">Age :</label>
+                                    <input class="form-control col-md-8" type="number" name="age" formControlName="age"
+                                        placeholder="" required>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-md-4 col-form-label text-right " for=" ">Gender :</label>
+                                    <select class="form-control col-md-8" formControlName="gender" name="gender"
+                                        required>
+                                        <option value="" selected disabled>--Select--</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Others">Others</option>
+                                    </select>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-md-4 col-form-label text-right " for=" ">Mobile number :</label>
+                                    <input class="form-control col-md-8" id="" type="number" name="mobileno"
+                                        formControlName="mobileno" placeholder="9937XXXXXX" required>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-md-4 col-form-label text-right " for=" ">Type of case :</label>
+                                    <select class="form-control col-md-8" formControlName="type" name="type">
+                                        <option value="" disabled selected>--select--</option>
+                                        <option value="ACTIVE SURVEILLANCE"> ACTIVE SURVEILLANCE</option>
+                                        <option value="CONTACT CASE"> CONTACT CASE</option>
+                                    </select>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-md-4 col-form-label text-right " for=" ">Shifted To :</label>
+                                    <select class="form-control col-md-8" formControlName="sift" name="sift">
+                                        <option value="" disabled selected>--select--</option>
+                                        <option value="COVID FACILITIES"> COVID FACILITIES</option>
+                                        <option value="OTHERs"> OTHER</option>
+                                    </select>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-md-4 col-form-label text-right " for=" "><b>Address</b> </label>
+
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-4" style="text-align:right">
+                                        <div class="form-group">
+                                            <label>Plot no.:</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="form-group">
+                                            <input class="form-control" id="" type="text" name="plot"
+                                                formControlName="plot" placeholder="Enter plot no">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group row ">
+                                    <div class="col-4" style="text-align:right">
+                                        <div class="form-group">
+                                            <label>Block:</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="form-group">
+                                            <select class="form-control" formControlName="block" name="block">
+                                                <option value="" disabled>--Block--</option>
+                                                <option *ngFor="let x of blockList" value="{{x.blockName}}">
+                                                    {{x.blockName}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-md-4 col-form-label text-right " for=" ">Isolation Date :</label>
+                                    <input class="form-control col-md-8" id="" type="date" name="isolationCompleteDate"
+                                        formControlName="isolationCompleteDate"  required>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-md-4 col-form-label text-right ">Symptoms:</label>
+                                    <div class="form-check form-check-inline mr-1 ">
+                                        <input class="form-check-input" id="Symtomatic" type="radio" value="Symtomatic"
+                                            name="symptoms" formControlName="symptoms">
+                                        <label class="form-check-label" for="Symtomatic">Symtomatic</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-1">
+                                        <input class="form-check-input" id="Asymtomatic" type="radio" value="Asymtomatic"
+                                            name="symptoms" formControlName="symptoms">
+                                        <label class="form-check-label" for="Asymtomatic">Asymtomatic</label>
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-md-4 col-form-label text-right " for=" ">Kit given ?:</label>
+                                    <div class="form-check form-check-inline mr-1 ">
+                                        <input class="form-check-input" id="YesKitGiven" type="radio" value="Yes" name="kit"
+                                            formControlName="kit">
+                                        <label class="form-check-label" for="YesKitGiven">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-1">
+                                        <input class="form-check-input" id="NoKitGiven" type="radio" value="No" name="kit"
+                                            formControlName="kit">
+                                        <label class="form-check-label" for="NoKitGiven">No</label>
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-md-4 col-form-label text-right " for=" ">Is a Covid
+                                        warrior?</label>
+                                    <div class="form-check form-check-inline mr-1 ">
+                                        <input class="form-check-input" id="yesCW" type="radio" value="Yes" name="covid"
+                                            formControlName="covid">
+                                        <label class="form-check-label" for="yesCW">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-1">
+                                        <input class="form-check-input" id="NoCW" type="radio" value="No" name="covid"
+                                            formControlName="covid">
+                                        <label class="form-check-label" for="NoCW">No</label>
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-md-4 col-form-label text-right " for=" ">Remark :</label>
+                                    <textarea class="form-control col-md-8" name="remark" formControlName="remark"
+                                        cols="30" rows="3" placeholder="Enter remark"></textarea>
+                                </div>
+                            </form>
+
+                        </div>
+                        <div class="modal-footer ">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                (click)="editdata();">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<div class="modal fade" id="deletedeliverystaffdetailsModal" tabindex="1 " role="dialog "
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document1">
+        <div class="modal-content">
+            <div class="modal-header deleteheader bg-danger">
+                <h5 class="modal-title" id="ModalLabel ">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>Are you sure you want to delete this data ?</h5>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                    (click)="delete(viewDetail.patientSNo);">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<app-ccd-footer></app-ccd-footer>
+
+</main>
+</div>
+</div>

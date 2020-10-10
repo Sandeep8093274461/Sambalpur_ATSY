@@ -1,0 +1,422 @@
+<div class="main-content-container container-fluid">
+            <div class="topBack" *ngIf="div1 || div0"><button class="btn btn-outline-primary" routerLink="/rrt/homePage"><i class="fas fa-arrow-left"></i></button></div>
+            <div class="card card-small mb-4" *ngIf="div0">
+                <div class="card-header border-bottom bg-primary search-header">
+                    <h6 class="m-0">Enter Your Detail :</h6>
+                </div>
+                <br>
+                <div class="card-body p-0 pb-3 text-center">
+                    <form [formGroup]="searchForm">
+                        <div class="entryField">
+                            <div class="form-group">
+                                <label class="float-left col-form-label"> Enter RRT code<span class="asterisk-mark">*</span> :</label>
+                                <input class="form-control" formControlName="rrtCode" placeholder="Unique RRT code.">
+                            </div>
+                        </div>
+                        <div class="entryField">
+                            <div class="form-group">
+                                <label class="float-left col-form-label"> Pin<span class="asterisk-mark">*</span> :</label>
+                                <input class="form-control" formControlName="pin" placeholder="XXXXX">
+                            </div>
+                        </div>
+                    </form>
+                    <div>
+                        <button class="btn btn-outline-primary" (click)="searchZoneList()">Search</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-small mb-4" *ngIf="div1">
+                <div class="card-header border-bottom bg-primary search-header">
+                            <h6 class="m-0">Zone list</h6>
+                </div>
+                <div class="card-body p-0 pb-3 text-center">
+                    <h6 class="no-record-found" *ngIf="zoneList.length == 0">No record found</h6>
+                    <table class="table mb-0 table-responsive-sm table-bordered table-striped" *ngIf="zoneList.length != 0">
+                        <thead >
+                            <tr class="border-1">
+                                <th>SL. no.</th>
+                                <th>Zone ID</th>
+                                <th>Name of the zone</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let x of zoneList; index as i">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ x.zoneId }}</td>
+                                <td>{{ x.zoneName }}</td>
+                                <td>
+                                    <button class="btn btn-outline-primary" (click)="loadPatientList(x)"> 
+                                        <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="topBack" *ngIf="divPList"><button class="btn btn-outline-primary" (click)="gotoPage1()"><i class="fas fa-arrow-left"></i></button></div>
+            <div class="card card-small mb-4" *ngIf="divPList">
+                <div class="card-header border-bottom bg-primary search-header">
+                    <div class="row">
+                        <div class="col-5">
+                            <h6 class="m-0">Patient list</h6>
+                        </div>
+                          <div class="col-7">
+                            <div class="input-group mb-3">
+                                <input class="form-control " type="text"  placeholder="Enter patient name"  required>
+                              <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+                <div class="card-body p-0 pb-3 text-center">
+                    <h6 class="no-record-found" *ngIf="patientList.length == 0">No record found</h6>
+                    <table class="table mb-0 table-responsive-sm table-bordered table-striped" *ngIf="patientList.length != 0">
+                        <thead class="bg-light">
+                            <tr class="border-1">
+                                <th>P.ID</th>
+                                <th>Name/Mobile No.</th>
+                                <th>Adress</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let x of patientList; index as i">
+                                <td>{{ x.patientId }}</td>
+                                <td>{{ x.patientName }} <br> {{x.mobileno}}</td>
+                                <td>{{ x.plot}}</td>
+                                <td>
+                                    <button class="btn btn-outline-primary" type="submit"
+                                        (click)="viewPatientsDetail(x)"> <i class="fa fa-bars"
+                                            aria-hidden="true"></i></button>
+                                </td>
+
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    <div *ngIf="div2">
+            <div class="topBack"><button class="btn btn-outline-primary" (click)="back();"><i class="fas fa-arrow-left"></i></button></div>
+            <div class="card card-small mb-4">
+                <div class="card-header border-bottom bg-primary search-header">
+                    <div class="row">
+                        <div class="col-7">
+                            <h6 class="m-0">Patient available</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0 pb-3 text-center" style="margin-top: 10px;">
+                    <div class="row"  >
+                        <div class="col-6 call-div" style="text-align: center;" id="pickedUp" >
+                            <button class="btn btn-outline-success" type="submit" (click)="available()" ><span class="fa-stack fa-lg">
+                                <i class="fa fa-user fa-stack-1x"></i>
+                              </span></button>
+                        <br>
+                        </div>
+                        <div class="col-6 call-div" style="text-align: center;"  id="disconnectDiv">
+                            <button class="btn btn-outline-danger" type="submit" (click)="notavailable()" ><span class="fa-stack fa-lg">
+                                <i class="fa fa-user fa-stack-1x text-black"></i>
+                                <i class="fa fa-ban fa-stack-2x text-black"></i>
+                              </span></button>
+                        <br>
+                        </div>
+                    </div>
+                    <!-- <div class="card-footer">
+                        <button class="btn btn-md btn-primary float-left" (click)="back()">
+                            Back</button>
+                    </div> -->
+                </div>
+            </div>
+    </div>
+    <div class="row" *ngIf="div3">
+        <div class="col">
+            <div class="card card-small mb-4">
+                <div class="card-header border-bottom bg-primary search-header">
+                    <div class="row">
+                        <div class="col-6">
+                            <h6 class="m-0">Patient Details</h6>
+                        </div>
+                        
+                    </div>
+
+
+                </div>
+                <div class="card-body p-0 pb-3 text-center" style="margin-left: 20px; margin-top: 10px;">
+
+                    <div class="row"  >
+                        <div class="col-5" style="text-align: right;">
+                            &nbsp; Paitient Id :
+                        </div>
+                        <div class="col-6" style="text-align: left;">
+                            <h6>{{viewDetail.patientId}}</h6>
+                        </div>
+                       
+                      
+                    </div>
+                    <div class="row"  >
+                        <div class="col-5" style="text-align: right;">
+                            &nbsp; Paitient Name :
+                        </div>
+                        <div class="col-6" style="text-align: left;">
+                            <h6>{{viewDetail.patientName}}</h6>
+                        </div>
+                       
+                      
+                    </div>
+                    <div class="row"  >
+                        <div class="col-5" style="text-align: right;">
+                            &nbsp; Age :
+                        </div>
+                        <div class="col-6" style="text-align: left;">
+                            <h6>{{viewDetail.age}}</h6>
+                        </div>
+                       
+                      
+                    </div>
+                    <div class="row"  >
+                        <div class="col-5" style="text-align: right;">
+                            &nbsp; Gender :
+                        </div>
+                        <div class="col-6" style="text-align: left;">
+                            <h6>{{viewDetail.gender}}</h6>
+                        </div>
+                       
+                      
+                    </div>
+                   
+                    <div class="row"  >
+                        <div class="col-5" style="text-align: right;">
+                            &nbsp; Mobile no :
+                        </div>
+                        <div class="col-6" style="text-align: left;">
+                            <h6>{{viewDetail.mobileno}}</h6>
+                        </div>
+                       
+                      
+                    </div>
+                    <div class="row"  >
+                        <div class="col-5" style="text-align: right;">
+                            &nbsp; Type of case :
+                        </div>
+                        <div class="col-6" style="text-align: left;">
+                            <h6>{{viewDetail.type}}</h6>
+                        </div>
+                       
+                      
+                    </div>
+                    <div class="row"  >
+                        <div class="col-5" style="text-align: right;">
+                            &nbsp;Shifted To :
+                        </div>
+                        <div class="col-6" style="text-align: left;">
+                            <h6>{{viewDetail.sift}}</h6>
+                        </div>
+                       
+                      
+                    </div>
+                    <div class="row"  >
+                        <div class="col-5" style="text-align: right;">
+                            &nbsp; Address :
+                        </div>
+                        <div class="col-6" style="text-align: left;">
+                            <h6>{{viewDetail.plot}} {{viewDetail.block}}</h6>
+                        </div>
+                       
+                      
+                    </div>
+                    <div class="row"  >
+                        <div class="col-5" style="text-align: right;">
+                            &nbsp; Kit Given :
+                        </div>
+                        <div class="col-6" style="text-align: left;">
+                            <h6>{{viewDetail.kit}}</h6>
+                        </div>
+                       
+                      
+                    </div>
+                    <div class="row"  >
+                        <div class="col-5" style="text-align: right;">
+                            &nbsp; Symtomatic :
+                        </div>
+                        <div class="col-6" style="text-align: left;">
+                            <h6>{{viewDetail.know}}</h6>
+                        </div>
+                       
+                      
+                    </div>
+                    <div class="row"  >
+                        <div class="col-5" style="text-align: right;">
+                            &nbsp; Covid warrior :
+                        </div>
+                        <div class="col-6" style="text-align: left;">
+                            <h6>{{viewDetail.covid}}</h6>
+                        </div>
+                       
+                      
+                    </div>
+                    
+                    
+                   
+                    
+
+
+                </div>
+               
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row" *ngIf="div3">
+        <div class="col">
+            <form [formGroup]="rrvisitEntryFrom">
+                <div class="card card-small mb-4">
+                    <div class="card-header border-bottom bg-primary search-header">
+                        <div class="row">
+                            <div class="col-8">
+                                <h6 class="m-0">Patient Status entry</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0 pb-3 text-center">
+                        <div class="entryField">
+                            <div class="form-group text-left">
+                                <label class="float-left col-form-label"> Health Status<span class="asterisk-mark">*</span> :</label>
+                                <select class="form-control" formControlName="healthStatusOfrrVisit">
+                                    <option value="" selected disabled>--Select--</option>
+                                    <option value="Stable">Stable</option>
+                                    <option value="Critical">Critical</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="entryField">
+                            <div class="form-group text-left">
+                                <label class="col-form-label"> Temperature<span class="asterisk-mark">*</span> :</label>
+                                <input type="text" class="form-control" placeholder="In Fahrenheit" formControlName="temperature">
+                            </div>
+                        </div>
+                        <div class="entryField">
+                            <div class="form-group text-left">
+                                <label class="col-form-label"> Oxygen / pulse <span class="asterisk-mark">*</span> :</label>
+                                <div class="row">
+                                    <div class="col-6"><input type="text" class="form-control" placeholder="Saturation" formControlName="oxySaturation"></div>
+                                    <div class="col-6"><input type="text" class="form-control" placeholder="Pulse rate" formControlName="oxyPulse"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="entryField">
+                            <div class="form-group text-left">
+                                <label class="col-form-label"> Blood pressure<span class="asterisk-mark">*</span> :</label>
+                                <div class="row">
+                                    <div class="col-6"><input type="text" class="form-control" placeholder="Upper" formControlName="bpUpper"></div>
+                                    <div class="col-6"><input type="text" class="form-control" placeholder="Lower" formControlName="bpLower"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="entryField">
+                            <div class="form-group text-left">
+                                <label class="col-form-label"> Take a picture<span class="asterisk-mark">*</span> :</label>
+                                &nbsp;&nbsp;<button class="btn btn-primary" id="hj"data-toggle="modal"  data-target="#statusofCall"  (click)="startCamera()">Capture Image</button>
+                            </div>
+                        </div>
+                        <div class="entryField">
+                            <div class="form-group text-left">
+                                <label class="col-form-label"> Remark<span class="asterisk-mark">*</span> :</label>
+                                <textarea class="form-control" name="" id="" cols="30" rows="3" formControlName="remarkOfrrVisit"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-md btn-primary" (click)="back()"><i class="fas fa-arrow-left"></i>
+                            Back</button>
+                            <button class="btn btn-md btn-primary float-right" (click)="rrvisitSubmit();" >
+                                Submit</button>
+                    </div>
+                   
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row" *ngIf="div4">
+        <div class="col">
+                <div class="card card-small mb-4">
+                    <div class="card-header border-bottom bg-primary search-header">
+                        <div class="row">
+                            <div class="col-8">
+                                <h6 class="m-0">Patient Status entry</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0 pb-3 text-center">
+                        <form [formGroup]="patientUnavailableForm">
+                            <div class="entryField">
+                                <div class="form-group">
+                                    <label class="float-left col-form-label"> Remark<span class="asterisk-mark">*</span> :</label>
+                                    <textarea  class="form-control" cols="30" rows="3" placeholder="Enter any reason or remark."  formControlName="remark"></textarea>
+                                </div>
+                            </div>    
+                        </form>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-md btn-primary" (click)="back()"><i class="fas fa-arrow-left"></i>
+                            Back</button>
+                            <button class="btn btn-md btn-primary float-right" (click)="patientUnavailable();">
+                                Submit</button>
+                    </div>
+                   
+                </div>
+          
+        </div>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+    
+    <div class="modal fade" id="statusofCall" tabindex="1 " role="dialog " aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog " role="document1">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title" id="ModalLabel ">Capture image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="videoTag">
+                    <video #video class="vid" id="vid" autoplay></video>
+                </div>
+                <div class="container vh-100">
+                    <div class="d-flex flex-column align-items-center">
+                       <div class="pb-2">
+                          <button class="btn btn-primary" id="output" (click)="capture()">Capture Image</button>
+                       </div>
+                       <div class="p-1">
+                          <canvas #canvas class="vid"></canvas>
+                       </div>
+                    </div>
+                 </div>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="stopCamera()">Close</button>
+                <button type="button" class="btn btn-primary" 
+                    data-dismiss="modal" (click)="stopCamera()">Save</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</div>

@@ -1,0 +1,153 @@
+<div class="main-content-container container-fluid px-4">
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <h3 class="page-title">Feedback</h3>
+        </div>
+    </div>
+
+    <div class="card card-small mb-4">
+        <form [formGroup]="feedBackForm">
+
+            <div class="card-header border-bottom bg-primary">
+                <h6 class="m-0">Enter your feedback</h6>
+            </div>
+            <div class="card-body list-group list-group-flush">
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="name">RR.Team Visited<span
+                                    class="asterisk-mark">*</span>:</label>
+                            <div class=" ">
+                                <select class="form-control" formControlName="rrTeamvisited" name="gender">
+                                    <option value="" selected disabled>--Select--</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4"  *ngIf="this.feedBackForm.value.rrTeamvisited == 'Yes'">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="name">Date of visit<span
+                                class="asterisk-mark">*</span>:</label>
+                            <div class=" ">
+                                <input class="form-control" id="" type="dateOfVisit" name="id" formControlName="id"
+                                    placeholder="Enter id.">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" *ngIf="this.feedBackForm.value.rrTeamvisited == 'Yes'">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="name">Time of visit<span
+                                class="asterisk-mark">*</span>:</label>
+                            <div class="">
+                                <input class="form-control" id="" type="time" name="timeOfVisit"
+                                    formControlName="timeOfVisit" placeholder="Enter age">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: -6px;">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="dob"> <b>Enter blood pressure info :</b> </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="margin-top: -25px; margin-left: 12px;">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="age"> Systolic<span class="asterisk-mark">*</span>:</label>
+                            <div class="">
+                                <input class="form-control" id="" type="number" name="systolic" formControlName="systolic"
+                                    placeholder="Enter Systolic">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="margin-top: -10px; margin-left: 12px;">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="gender"> Diastolic<span
+                                    class="asterisk-mark">*</span>:</label>
+                            <div class=" ">
+                                <input class="form-control" id="" type="number" name="diastolic" formControlName="diastolic"
+                                placeholder="Enter diastolic">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: -6px;">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="dob"> <b>Enter thermometer data :</b> </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="margin-top: -25px; margin-left: 12px;">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="age">In celicious<span class="asterisk-mark">*</span>:</label>
+                            <div class="">
+                                <input class="form-control" id="" type="number" name="thermomrterDataIncel" formControlName="thermomrterDataIncel"
+                                    placeholder="Enter temp. in celicious">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="margin-top: -10px; margin-left: 12px;">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="gender">In fahrenheit<span
+                                    class="asterisk-mark">*</span>:</label>
+                            <div class=" ">
+                                <input class="form-control" id="" type="number" name="thermomrterDataInfahren" formControlName="thermomrterDataInfahren"
+                                placeholder="Enter temp. in fahrenheit">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: -6px;">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="dob"> <b>Enter oxymeter data :</b> </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="margin-top: -25px; margin-left: 12px;">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="age">Oxygen saturation<span class="asterisk-mark">*</span>:</label>
+                            <div class="">
+                                <input class="form-control" id="" type="number" name="oxygenSaturation" formControlName="oxygenSaturation"
+                                    placeholder="Enter oxygen saturation">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="margin-top: -10px; margin-left: 12px;">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="gender">Pulse rate<span
+                                    class="asterisk-mark">*</span>:</label>
+                            <div class=" ">
+                                <input class="form-control" id="" type="number" name="pulseRate" formControlName="pulseRate"
+                                placeholder="Enter pulse rate">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: -6px;">
+                   
+                    <div class="col-lg-4" >
+                        <div class="form-group">
+                            <label class=" col-form-label" for="age">Feedback<span class="asterisk-mark">*</span>:</label>
+                            <div class="">
+                                <textarea class="form-control"name="feedback" formControlName="feedback" id="" cols="30" rows="3" placeholder="Feedback"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+
+
+
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-md btn-secondary" type="reset"> Reset</button>
+                <button class="btn btn-md btn-primary float-right" [disabled]="feedBackForm.invalid"
+                    (click)="addpatientDetils()">
+                    Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

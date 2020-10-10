@@ -1,0 +1,470 @@
+<div class="container-fluid">
+    <div class="row">
+  
+        <app-ccd-sidebar></app-ccd-sidebar>
+  
+      <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+
+
+
+<app-ccd-header></app-ccd-header>
+
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="main-content-container container-fluid px-4">
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <h3 class="page-title">All Patient List</h3>
+        </div>
+    </div>
+    <div class="row" *ngIf="div1">
+        <div class="col">
+            <div class="card card-small mb-4">
+                <div class="card-header border-bottom bg-primary search-header">
+                    <div class="row">
+                        <div class="col-6">
+                            <h6 class="m-0">Patient list</h6>
+                        </div>
+                        <div class="col-2"></div>
+                          <div class="col-4">
+                            <div class="input-group mb-3">
+                                <input class="form-control " type="date"  [(ngModel)]="searchDate " required>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+                <div class="card-body p-0 pb-3 text-center">
+
+                    <table class="table mb-0 table-responsive-sm table-bordered table-striped table-hover">
+                        <thead>
+                            <tr class="border-1">
+                                <th>SL.</th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Mobile no.</th>
+                                <th>Gender</th>
+                                <th>Covid warrior?</th>
+                                <th>Health report</th>
+                                <th>View</th>
+                                <th>Call History</th>
+                                <!-- <th>VC</th> -->
+                                <th *ngIf ="getTodayDate == searchDate || searchDate == null ">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let x of Patientdata | paginate: { itemsPerPage: 8, currentPage: p }; index as i">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ x.patientId }}</td>
+                                <td>{{ x.patientName }}</td>
+                                <td>{{ x.age }}</td>
+                                <td>{{ x.mobileno }}</td>
+                                <td>{{ x.gender }}</td>
+                                <td>{{ x.covid }}</td>
+                                <td>
+                                    <button class="btn btn-outline-primary" (click)="showPatientHealthReport(x.patientId);">
+                                        <i class="fas fa-angle-double-right" aria-hidden="true"></i></button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-success" (click)="viewPatientsDetail(x)"> 
+                                        <i class="fas fa-eye" aria-hidden="true"></i></button>
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-outline-primary" data-toggle="modal"
+                                        data-target="#callHistoryDetails" (click)="callHistoryDetails(x.patientSNo);"
+                                        data-backdrop="static" data-keyboard="false"> <i class="fas fa-phone"
+                                            aria-hidden="true"></i></button>
+                                </td>
+                                <!-- <td>
+                                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#vcModal"  (click)="getPatientVCId(x.patientId)">
+                                            <i class="fas fa-video-camera" aria-hidden="true"></i></button>
+                                </td> -->
+                                <td>
+                                    <!-- [disable]='getTodayDate == searchDate '  -->
+                                    <button class="btn btn-outline-info" type="submit" *ngIf ="getTodayDate == searchDate || searchDate ==null " data-toggle="modal" data-target="#statusofCall"
+                                        (click)="actionModalDetail(x);"data-backdrop="static" data-keyboard="false">
+                                        <i class="fas fa-bars" aria-hidden="true"></i></button>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <br>
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="div2">
+        <div class="col">
+            <div class="card card-small mb-4">
+                <div class="card-header border-bottom bg-primary search-header">
+                    <div class="row">
+                        <div class="col-6">
+                            <h6 class="m-0">Patient list</h6>
+                        </div>
+                        <!-- <div class="col-2"></div>
+                          <div class="col-4">
+                            <div class="input-group mb-3">
+                                <input class="form-control " type="text" [(ngModel)]="searchString" placeholder="Enter the employee name" required>
+                              <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
+                              </div>
+                            </div>
+                          </div> -->
+                    </div>
+
+
+                </div>
+                <div class="card-body p-0 pb-3 text-center" style="margin-left: 20px;">
+
+                    <div class="row" style="text-align: left;">
+                        <div class="col-lg-2 ">
+                            &nbsp; Register No. :
+                        </div>
+
+                        <div class="col-lg-4 ">
+                            <h6>{{viewDetail.patientSNo}}</h6>
+                        </div>
+                        <div class="col-lg-2">
+                            &nbsp; Id :
+                        </div>
+                        <div class="col-lg-4">
+                            <h6>{{viewDetail.id || '--'}}</h6>
+                        </div>
+
+                    </div>
+                    <div class="row" style="text-align: left;">
+                        <div class="col-lg-2 ">
+                            &nbsp; Patient id :
+                        </div>
+
+                        <div class="col-lg-4 ">
+                            <h6>{{viewDetail.patientId}}</h6>
+                        </div>
+                        <div class="col-lg-2">
+                            &nbsp; SRF id :
+                        </div>
+                        <div class="col-lg-4">
+                            <h6>{{viewDetail.srfId || '--'}}</h6>
+                        </div>
+
+                    </div>
+                    <div class="row" style="text-align: left;">
+                        <div class="col-lg-2 ">
+                            &nbsp; Patient name:
+                        </div>
+
+                        <div class="col-lg-4 ">
+                            <h6>{{viewDetail.patientName}}</h6>
+                        </div>
+                        <div class="col-lg-2">
+                            &nbsp; Age:
+                        </div>
+                        <div class="col-lg-4">
+                            <h6>{{viewDetail.age}}</h6>
+                        </div>
+
+                    </div>
+                    <div class="row" style="text-align: left;">
+                        <div class="col-lg-2 ">
+                            &nbsp; Mobile number:
+                        </div>
+
+                        <div class="col-lg-4 ">
+                            <h6>{{viewDetail.mobileno}}</h6>
+                        </div>
+                        <div class="col-lg-2">
+                            &nbsp; Gender :
+                        </div>
+                        <div class="col-lg-4">
+                            <h6>{{viewDetail.gender}}</h6>
+                        </div>
+
+                    </div>
+                    <div class="row" style="text-align: left;">
+                        <div class="col-lg-2 ">
+                            &nbsp; Symtomatic :
+                        </div>
+
+                        <div class="col-lg-4 ">
+                            <h6>{{viewDetail.know}}</h6>
+                        </div>
+                        <div class="col-lg-2">
+                            &nbsp; Plot no. :
+                        </div>
+                        <div class="col-lg-4">
+                            <h6>{{viewDetail.plot}}</h6>
+                        </div>
+
+                    </div>
+                    <div class="row" style="text-align: left;">
+                        <div class="col-lg-2 ">
+                            &nbsp; Covid warrior:
+                        </div>
+
+                        <div class="col-lg-4 ">
+                            <h6>{{viewDetail.covid}}</h6>
+                        </div>
+                        <div class="col-lg-2">
+                            &nbsp; Block :
+                        </div>
+                        <div class="col-lg-4">
+                            <h6>{{viewDetail.block}}</h6>
+                        </div>
+
+                    </div>
+                    <div class="row" style="text-align: left;" *ngIf="viewDetail.remark">
+                        <div class="col-lg-2 ">
+                            &nbsp; Remark:
+                        </div>
+                        <div class="col-lg-10">
+                            <h6>{{viewDetail.remark}}</h6>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-md btn-primary" (click)="back()">
+                        <i class="fas fa-arrow-left"></i> Back</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <h3 class="page-title">All Patient List</h3>
+        <button (click)="div1Function()">2</button> -->
+    </div>
+</div>
+
+<div class="modal fade" id="callHistoryDetails" tabindex="1 " role="dialog " aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog " role="document1">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title" id="ModalLabel ">Call History</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body padding-0">
+                <table class="table mb-0 table-responsive-sm table-bordered ">
+                    <thead class="bg-light">
+                        <tr class="border-1">
+                            <th>SL.</th>
+                            <th>Status Of call</th>
+                            <th>Date of call</th>
+                            <th>Time of Call</th>
+                            <th>Remark</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- | filter : 'name' : searchString; -->
+                        <tr *ngFor="let x of callDetails; index as i">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ x.callStatus }}</td>
+                            <td>{{ x.dateOfVisit || '--'}}</td>
+                            <td>{{ x.timeOfVisit || '--' }}</td>
+                            <td>{{ x.remark || '--'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <!-- <button type="button" class="btn btn-danger" (click)="statusOfCall();"
+                    data-dismiss="modal">Ok</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="statusofCall" tabindex="1 " role="dialog " aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog " role="document1">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title" id="ModalLabel ">Enter status of call</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" [formGroup]="statusOfCallForm">
+                    <div class="row" style="text-align: center;">
+
+                        <div class="col-lg-4 call-div" id="pickedUp">
+                            <button class="btn btn-outline-success" type="submit" (click)="pickedUp()"><i
+                                    class="fas fa-phone fa-rotate-180"></i></button>
+                            <br>Picked Up
+
+                        </div>
+                        <div class="col-lg-4 call-div" id="disconnectDiv">
+                            <button class="btn btn-outline-info" type="submit" (click)="diconnected()"><i
+                                    class="fas fa-phone "></i></button>
+                            <br> Disconnected
+                        </div>
+                        <div class="col-lg-4 call-div" id="noNetworkDiv">
+                            <button class="btn btn-outline-danger" type="submit" (click)="noNetwork()"> <i
+                                    class="fas fa-ban" aria-hidden="true"></i></button>
+                            <br> No network
+                        </div>
+
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row" style="text-align: center;" *ngIf="div3">
+                        <div class="col-lg-4 call-div" id="isolation">
+                            <button class="btn btn-outline-success" type="submit" (click)="isolation()">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-home fa-stack-1x text-black"></i>
+                                      </span></button>
+                            <br>Home Isolation
+
+                        </div>
+                        <div class="col-lg-4 call-div" id="hospitalize">
+                            <button class="btn btn-outline-success" type="submit" (click)="hospitalize()">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-hospital fa-stack-1x text-black"></i>
+                                      </span></button>
+                            <br>Hospitalize
+
+                        </div>
+                        <div class="col-lg-4 call-div" id="death">
+                            <button class="btn btn-outline-danger" type="submit" (click)="death()"><span class="fa-stack fa-lg">
+                                <i class="fa fa-user fa-stack-1x text-black"></i>
+                                <i class="fa fa-ban fa-stack-2x text-black"></i>
+                              </span></button>
+                            <br> Death
+                        </div>
+                    </div> <br>
+                    <br>
+                    <div class="row" *ngIf="div3">
+                        <div class="col-lg-1">
+                        </div>
+                        <div class="col-lg-4">
+                            <label class=" col-form-label" for="name">RR team visited ?<span
+                                    class="asterisk-mark">*</span>:</label>
+                        </div>
+                        <div class="col-lg-6">
+                            <select class="form-control" name="visited" formControlName="visited">
+                                <option value="" selected disabled>--Select--</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div *ngIf="this.statusOfCallForm.value.visited == 'Yes'">
+                        <div class="row">
+
+                            <div class="col-lg-1">
+
+                            </div>
+                            <div class="col-lg-4">
+                                <label class=" col-form-label" for="name">Date of visit<span
+                                        class="asterisk-mark">*</span>:</label>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <input class="form-control" id="dateOfVisit" type="date" name="age"
+                                    formControlName="dateOfVisit" placeholder="Enter age">
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-1">
+
+                            </div>
+                            <div class="col-lg-4">
+                                <label class=" col-form-label" for="name">Time of visit<span
+                                        class="asterisk-mark">*</span>:</label>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <input class="form-control" id="" type="time" name="timeOfVisit"
+                                    formControlName="timeOfVisit" placeholder="Enter age">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-1">
+
+                            </div>
+                            <div class="col-lg-4">
+                                <label class=" col-form-label" for="name">Status of health<span
+                                        class="asterisk-mark">*</span>:</label>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <select class="form-control" name="statusOfHealth" formControlName="statusOfHealth">
+                                    <option value="" selected disabled>--Select--</option>
+                                    <option value="Good">Good</option>
+                                    <option value="Discomfort">Discomfort</option>
+                                    <option value="Bad">Bad</option>
+                                    <option value="very bad">Very bad</option>
+                                </select>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-1">
+                        </div>
+                        <div class="col-lg-4">
+                            <label class=" col-form-label" for="name">Remark :</label>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <textarea class="form-control" name="remark" placeholder="Add any remark." cols="30" rows="3"
+                                formControlName="remark"></textarea>
+                        </div>
+
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="statusOfCall();"
+                    data-dismiss="modal">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="vcModal" tabindex="1 " role="dialog " aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog " role="document1">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title" id="ModalLabel ">Live with patient</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding: 0;">
+
+                <video id="Rvideo" class="vc-video" autoplay="autoplay"></video>
+                <video id="Ivideo" class="vc-video vc-my-video" autoplay="autoplay" muted="muted"></video>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<app-ccd-footer></app-ccd-footer>
+
+</main>
+</div>
+</div>

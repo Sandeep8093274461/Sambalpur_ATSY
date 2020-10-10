@@ -1,0 +1,175 @@
+<div class="container-fluid">
+    <div class="row">
+  
+        <app-ccd-sidebar></app-ccd-sidebar>
+  
+      <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+
+
+
+<app-ccd-header></app-ccd-header>
+
+<div class="main-content-container container-fluid px-4">
+  <div class="page-header row no-gutters py-4">
+    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+      <h3 class="page-title">Patient health information</h3>
+    </div>
+  </div>
+  <div><button class="topBack btn btn-outline-primary" routerLink="/ccd/controlRoom"><i class="fas fa-arrow-left" aria-hidden="true"></i></button></div>
+  <div id="print-details">
+          <div class="card card-small mb-4">
+            <div class="card-header border-bottom bg-primary">
+              <h6 class="m-0">All Feedbacks</h6>
+            </div>
+            <div class="card-body p-0 pb-3 text-center">
+                    <h6 class="no-record-found" *ngIf="feedbackList.length == 0">No record found</h6>
+                    <table class="table table-hover" *ngIf="feedbackList.length != 0">
+                      <thead class="bg-light">
+                        <tr class="border-1">
+                            <th>SL.</th>
+                            <th>Date - Time</th>
+                            <th>R.R. Team visited ?</th>
+                            <th>Received medical kit?</th>
+                            <th>Health condition</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let x of feedbackList; index as i">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ x.registerOn | date: 'medium' }}</td>
+                            <td>{{ x.rrTeamVisited }}</td>
+                            <td>{{ x.medicalKit }}</td>
+                            <td>{{ x.healthToday }}</td>
+                        </tr>
+                    </tbody>
+                    </table>
+            </div>
+          </div>
+          <div class="card card-small mb-4">
+            <div class="card-header border-bottom bg-primary">
+              <h6 class="m-0">Vital information</h6>
+            </div>
+            <div class="card-body p-0 pb-3 text-center">
+                    <h6 class="no-record-found" *ngIf="healthInfoList.length == 0">No record found</h6>
+                    <table class="table table-hover" *ngIf="healthInfoList.length != 0">
+                      <thead class="bg-light">
+                        <tr class="border-1">
+                            <th>SL.</th>
+                            <th>Date - Time</th>
+                            <th>Temperature</th>
+                            <th>Oxygen / Pulse</th>
+                            <th>Blood pressure</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let x of healthInfoList; index as i">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ x.addedOn | date: 'medium' }}</td>
+                            <td>{{ x.temerature }}</td>
+                            <td>{{ x.oxySaturation }} / {{ x.oxyPulseRate }}</td>
+                            <td>{{ x.bpSystolic }} / {{ x.bpDiastolic }}</td>
+                        </tr>
+                    </tbody>
+                    </table>
+              </div>
+          </div>
+          <div class="card card-small mb-4">
+            <div class="card-header border-bottom bg-primary">
+              <h6 class="m-0">RRT visit information</h6>
+            </div>
+            <div class="card-body p-0 pb-3 text-center">
+                    <h6 class="no-record-found" *ngIf="rrtVisitList.length == 0">No record found</h6>
+                    <table class="table table-hover" *ngIf="rrtVisitList.length != 0">
+                      <thead class="bg-light">
+                        <tr class="border-1">
+                            <th>SL.</th>
+                            <th>Date - Time</th>
+                            <th>Patient available?</th>
+                            <th>Temperature</th>
+                            <th>Oxygen / Pulse</th>
+                            <th>Blood pressure</th>
+                            <th>Remark</th>
+                            <th>Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let x of rrtVisitList; index as i">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ x.visitOn | date: 'medium' }}</td>
+                            <td>
+                              {{ x.isAvailable }} &nbsp;
+                              <button *ngIf="x.isAvailable == 'Yes'" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#patientPicPreview" (click)="setX(x);">Picture</button>
+                            </td>
+                            <td>{{ x.temperature || '--' }}</td>
+                            <td>{{ x.oxySaturation || '--' }} / {{ x.oxyPulse || '--' }}</td>
+                            <td>{{ x.bpUpper || '--' }} / {{ x.bpLower || '--' }}</td>
+                            <td>{{ x.remarkOfrrVisit || x.remark }}</td>
+                            <td>
+                              <button class="btn btn-outline-primary" data-toggle="modal" data-target="#locationPreview" (click)="showPatientLocation(x);"><i class="fas fa-map"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    </table>
+              </div>
+          </div>
+  </div>
+  <div class="page-footer row no-gutters py-4">
+    <div class="col-12 text-center text-sm-left mb-0">
+      <div class="row">
+        <div class="col-md-6 text-left">
+              <button class="btn btn-md btn-primary" routerLink="/ccd/controlRoom"><i class="fas fa-arrow-left"></i> Back</button>
+        </div>
+        <div class="col-md-6 text-right">
+          <button class="btn btn-primary" [printStyle]="{h6 : {'color': 'black !important'} }"
+          [useExistingCss]="true" printSectionId="print-details" ngxPrint><i class="fas fa-print"></i> Print</button>&nbsp;
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="patientPicPreview" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="modal">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title" id="ModalLabel ">Picture of {{ x.patientName }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <img class="picture-preview" src="{{x.patientPicUrl}}" alt="">
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="modal fade" id="locationPreview" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="modal">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title" id="ModalLabel ">Location of {{ x.patientName }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <div id="map" class="mapPreview"></div>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+</div>
+
+
+<app-ccd-footer></app-ccd-footer>
+
+</main>
+</div>
+</div>

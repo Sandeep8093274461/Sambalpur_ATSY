@@ -1,0 +1,341 @@
+<div class="container-fluid">
+    <div class="row">
+  
+        <app-ccd-sidebar></app-ccd-sidebar>
+  
+      <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+        <app-ccd-header></app-ccd-header>
+
+
+
+
+<div class="main-content-container container-fluid px-4">
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <h3 class="page-title">Register new patient</h3>
+        </div>
+    </div>
+    <div class="card card-small mb-4">
+        <form [formGroup]="kitEntryForm">
+
+            <div class="card-header border-bottom bg-primary">
+                <h6 class="m-0">Enter patient details</h6>
+            </div>
+            <div class="card-body list-group list-group-flush">
+
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="name"> Type of entry ? <span
+                                    class="asterisk-mark">* </span>:</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="form-group">
+                            <div class="form-check form-check-inline mr-1 ">
+                                <input class="col-form-label form-check-input" id="xlsheet" type="radio" value="yes" #chkId2
+                                    name="yes" formControlName="yes">
+                                <label class="form-check-label" for="xlsheet">Excel sheet Entry</label>
+                            </div>
+                            <div class=" col-form-label form-check form-check-inline mr-1">
+                                <input class="form-check-input" id="entry" type="radio" value="No" #chkId1 (change)="0"
+                                    checked name="yes" formControlName="yes">
+                                <label class="form-check-label" for="entry">Online entry</label>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    
+                </div>
+               
+                <div class="row" *ngIf='chkId2.checked'>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label class=" col-form-label float-right" for="dob">Upload excelsheet<span
+                                class="asterisk-mark">* </span>:</label>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <div class="">
+                                <input type="file" class="form-control" id="xlSheet" formControlName="excelsheetFile" accept=".xls, .xlsx" (change)="onFileChange($event)">
+                            </div>
+                            <br>
+                            <a href="assets/dummyExcel.xlsx" download>Download the demo of excel format <i class="fa fa-download" aria-hidden="true"></i></a>
+                            <!-- (change)="onFileChange($event)" -->
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <div class="">
+                                <button class="btn btn-md btn-primary" [disabled]="kitEntryForm.invalid"  (click)="importData();"><b>Import</b> </button>
+                            </div>
+                        </div>
+                    </div>
+                  
+                </div>
+                
+               
+
+
+            </div>
+            <div class="card-footer">
+                <!-- <button class="btn btn-md btn-secondary" type="reset"> Reset</button>
+                <button class="btn btn-md btn-primary float-right" [disabled]="kitEntryForm.invalid" >
+                    Submit</button> -->
+            </div>
+        </form>
+    </div>
+    <div class="card card-small mb-4" *ngIf='chkId1.checked'>
+        <form [formGroup]="patientEntryForm">
+
+            <div class="card-header border-bottom bg-primary">
+                <h6 class="m-0">Enter patient details</h6>
+            </div>
+            <div class="card-body list-group list-group-flush">
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="name">Patient id<span
+                                    class="asterisk-mark">*</span>:</label>
+                            <div class=" ">
+                                <input class="form-control" id="" type="text" name="patientId"
+                                    formControlName="patientId" placeholder="Enter patient id.">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="Id">Id:</label>
+                            <div class=" ">
+                                <input class="form-control" id="" type="text" name="id" formControlName="id"
+                                    placeholder="Enter id.">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="dob">SRF id:</label>
+                            <div class="">
+                                <input class="form-control" id="" type="text" name="srfId" formControlName="srfId"
+                                    placeholder="Enter SRF id">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="dob">Patient name<span
+                                    class="asterisk-mark">*</span>:</label>
+                            <div class="">
+                                <input class="form-control" id="" type="text" name="patientName"
+                                    formControlName="patientName" placeholder="Enter patient name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="age"> Age<span class="asterisk-mark">*</span>:</label>
+                            <div class="">
+                                <input class="form-control" id="" type="number" name="age" formControlName="age"
+                                    placeholder="Enter age">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="gender"> Gender<span
+                                    class="asterisk-mark">*</span>:</label>
+                            <div class=" ">
+                                <select class="form-control" formControlName="gender" name="gender">
+                                    <option value="" selected disabled>--Select--</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Others">Others</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="mobileno"> Mobile number<span
+                                    class="asterisk-mark">*</span>:</label>
+                            <div class=" ">
+                                <input class="form-control" id="" type="number" name="mobileno"
+                                    formControlName="mobileno" placeholder="9937XXXXXX">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="type"> Type of case<span class="asterisk-mark">*</span>:</label>
+                            <div class=" ">
+                                <select class="form-control" formControlName="type" name="type">
+                                    <option value="" disabled selected>--select--</option>
+                                    <option value="ACTIVE SURVEILLANCE"> ACTIVE SURVEILLANCE</option>
+                                    <option value="CONTACT CASE"> CONTACT CASE</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="gender"> Shifted To<span
+                                    class="asterisk-mark">*</span>:</label>
+                            <div class=" ">
+                                <select class="form-control" formControlName="sift" name="sift">
+                                    <option value="" disabled selected>--select--</option>
+                                    <option value="COVID FACILITIES"> COVID FACILITIES</option>
+                                    <option value="OTHERs"> OTHER</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="licenseno"> Address :</label><br>
+                            <div class="row ">
+                                <!-- <input class="form-control" id="" type="text" name="licenseno"
+                                    formControlName="licenseno" placeholder="Enter license no"> -->
+                                <div class="col-4" style="text-align:right">
+                                    <div class="form-group">
+                                        <label>Plot no.:</label>
+                                    </div>
+                                </div>
+                                <div class="col-8">
+                                    <div class="form-group">
+                                        <input class="form-control" id="" type="text" name="plot" formControlName="plot"
+                                            placeholder="Enter plot no">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <br>
+                            <div class="row " style="padding-top: 15px; margin-left: -17px;">
+                                <!-- <input class="form-control" id="" type="text" name="licenseno"
+                                    formControlName="licenseno" placeholder="Enter license no"> -->
+                                <div class="col-2" style="text-align:right">
+                                    <div class="form-group">
+                                        <label>Block.:</label>
+                                    </div>
+                                </div>
+                                <div class="col-10">
+                                    <div class="form-group">
+                                        <select class="form-control" formControlName="block" name="block">
+                                            <option value="" disabled>--Block--</option>
+                                            <option *ngFor="let x of blockList" value="{{x.blockName}}" >{{x.blockName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="mobileno"> Isolation Complete Date<span
+                                    class="asterisk-mark">*</span>:</label>
+                            <div class=" ">
+                                <input class="form-control" id="" type="date" name="licenseno"
+                                formControlName="isolationCompleteDate" >
+                            </div>
+                        </div>
+                    </div>
+                   
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="mobileno"> Kit given ? <span
+                                    class="asterisk-mark">*</span>:</label>
+                            <div class=" ">
+                                <div class="form-check form-check-inline mr-1 ">
+                                    <input class="form-check-input" id="kitGivenYes" type="radio" value="Yes" name="kit"
+                                        formControlName="kit">
+                                    <label class="form-check-label" for="kitGivenYes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline mr-1">
+                                    <input class="form-check-input" id="kitGivenNo" type="radio" value="No" name="kit"
+                                        formControlName="kit">
+                                    <label class="form-check-label" for="kitGivenNo">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="mobileno"> Symptomatic<span
+                                    class="asterisk-mark">*</span>:</label>
+                            <div class=" ">
+                                <div class="form-check form-check-inline mr-1 ">
+                                    <input class="form-check-input" id="Symtomatic" type="radio" value="Symtomatic" name="symptoms"
+                                        formControlName="symptoms">
+                                    <label class="form-check-label" for="Symtomatic">Symptomatic</label>
+                                </div>
+                                <div class="form-check form-check-inline mr-1">
+                                    <input class="form-check-input" id="Asymtomatic" type="radio" value="Asymtomatic" name="symptoms"
+                                        formControlName="symptoms">
+                                    <label class="form-check-label" for="Asymtomatic">Asymptomatic</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="mobileno"> Is he/she a Covid warrior ?<span
+                                    class="asterisk-mark">*</span>:</label>
+                            <div class=" ">
+                                <div class="form-check form-check-inline mr-1 ">
+                                    <input class="form-check-input" id="covidWariorYes" type="radio" value="Yes" name="covid"
+                                        formControlName="covid">
+                                    <label class="form-check-label" for="covidWariorYes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline mr-1">
+                                    <input class="form-check-input" id="covidWariorNo" type="radio" value="No" name="covid"
+                                        formControlName="covid">
+                                    <label class="form-check-label" for="covidWariorNo">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class=" col-form-label" for="mobileno"> Remark:</label>
+                            <div>
+                                <textarea class="form-control" name="remark" formControlName="remark" cols="30" rows="3"
+                                    placeholder="Enter remark"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-md btn-secondary" type="reset"> Reset</button>
+                <button class="btn btn-md btn-primary float-right" [disabled]="patientEntryForm.invalid"
+                    (click)="addpatientDetils()">
+                    Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+<app-ccd-footer></app-ccd-footer>
+
+        </main>
+    </div>
+</div>
+

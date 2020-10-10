@@ -1,0 +1,75 @@
+/* You can add global styles to this file, and also import other style files */
+
+.card-header h6{
+    color: white;
+    font-size: 18px;
+  }
+  .asterisk-mark {
+    color: red;
+    font-weight: bold;
+  }
+  .main-content {
+      min-height: 500px !important;
+  }
+  .main-content-container {
+      min-height: 700px;
+  }
+  .no-record-found {
+      text-align: center;
+      color: red;
+      font-weight: bold;
+      padding: 10px;
+  }
+  .modal .modal-header h5 {
+    color: white !important;
+  }
+  .modal .modal-header .close {
+    color: black !important;
+  }
+  .color {
+    color: red;
+  }
+  .form-control{
+    border-color: lightgrey !important;
+    background-color: white !important;
+  }
+  /* .form-group label {
+    color: black; 
+     font-weight: bold;
+  } */
+  
+  .search-header {
+    height: 57px;
+  }
+  .search-header .input-group{
+    margin-top: -6px;
+  }
+  .topBack {
+    border-radius: 20px !important;
+    padding-top: 10px !important;
+    margin-bottom: 10px !important;
+  }
+  .design-map-lg{
+    height: 530px;
+    width: 100%;
+  }
+  .design-map-md{
+    height: 400px;
+    width: 100%;
+  }
+  .padding-0{
+    padding: 0 !important;
+  }
+  .vc-video {
+    width: 100%;
+    display: block;
+    border-radius: 0 0 10px 0px;
+    position: relative;
+  }
+  .vc-my-video {
+    width: 100px;
+    height: 100px;
+    bottom: 110px;
+    left: 10px;
+    border-radius: 10px;
+  }

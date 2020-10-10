@@ -1,0 +1,222 @@
+<div *ngIf="div2">
+    <br>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-sm-6" (click)="feedBack();">
+                <div class="card-box feedback-card">
+
+                    <div class="inner">
+
+                        <h4 style=" margin-left: 140px;"> FEEDBACK </h4>
+
+                    </div>
+                    <img src="assets/feedback.png" alt="" style="height: 70px; width: 80px; margin-top:-61px ;">
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6" >
+                <div class="card-box attendance-card">
+
+                    <div class="inner">
+                        <h4 style=" margin-left: 137px;"> ATTENDANCE </h4>
+                    </div>
+                    <img src="assets/face.png" alt="" style="height: 70px; width: 80px; margin-top:-61px ;">
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6" routerLink="/remoteHealthCares">
+                <div class="card-box healthcare-card">
+
+                    <div class="inner">
+                        <h4 style=" margin-left: 135px; margin-top: -6px"> REMOTE HEALTH <br>
+                            CARES </h4>
+                    </div>
+                    <img src="assets/pulse.png" alt="" style="height: 70px; width: 80px; margin-top:-123px ;">
+
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-6" (click)="sos();">
+                <div class="card-box emergency-card">
+                    <div class="inner">
+                        <h4 style=" margin-left: 132px; margin-top: -6px"> EMERGENCY <br> MESSAGE </h4>
+                    </div>
+                    <img src="assets/sos.png" alt="" style="height: 80px; width: 80px; margin-top:-123px ;">
+
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" routerLink="/viewPage"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
+
+    </div>
+</div>
+<div *ngIf="div3" #feedBack>
+    <div class="container">
+            <div style="margin-top: -14px;">
+                <div class="card-box bg-pinaple feedback-heading" style="height: 50px;">
+                    <div class="inner">
+                        <h4 style=" margin-left: 25px; margin-top: -20px;"> FEEDBACK </h4>
+                    </div>
+                    <img src="assets/feedback.png" alt=""
+                        style="height: 40px; width: 40px; margin-top:-60px ;margin-left: 57px">
+                </div>
+            </div>
+            <form [formGroup]="feedBackForm">
+            <div>
+                <div class="card-box bg-orange">
+
+                    <div class="inner">
+                        <h5><b>Have Rapid Response Team visited you ?</b> </h5>
+                    </div>
+                    <div class="col-lg-4 call-div" >
+                        <button class="btn btn-success"
+                            style="margin-top: -4px; margin-left: -173px !important; width: 40%; " id="rrTeamVisitedYes"  (click)= "rrTeamVisitedYes();"><b>YES</b> </button>
+
+                    </div>
+                    <div class="col-lg-4 call-div" id="no">
+                        <button class="btn btn-danger "
+                            style="margin-top: -57px; margin-left: 173px !important; width: 40%;" id="rrTeamVisitedNo" (click)= "rrTeamVisitedNo();"><b>NO</b> </button>
+                    </div>
+                </div>
+                <div class="card-box bg-orange">
+
+                    <div class="inner">
+                        <h5><b> Have you received the medical kit ?</b> </h5>
+                    </div>
+                    <div class="col-lg-4 call-div" >
+                        <button class="btn btn-success "
+                            style="margin-top: -4px; margin-left: -173px !important; width: 40%;"
+                            (click)= "rcvdmedicalKitYes();"><b>YES</b> </button>
+                    </div>
+                    <div class="col-lg-4 call-div" id="no">
+                        <button class="btn btn-danger "
+                            style="margin-top: -57px; margin-left: 173px !important; width: 40%;" (click)= "rcvdmedicalKitNo();"><b>NO</b> </button>
+                    </div>
+                </div>
+                <div class="card-box bg-orange" style="height: 180px;">
+
+                    <div class="inner">
+                        <h5><b> How is your health today ?</b> </h5>
+                        <br>
+                    </div>
+                    <div class="col-lg-4 call-div" >
+
+                        <button class="btn btn-success "
+                            style="margin-top: -4px; margin-left: -173px !important; width: 40%;"
+                            (click)= "healthTodayGood();"><b>GOOD</b> </button>
+                    </div>
+                    <div class="col-lg-4 call-div" id="no">
+                        <button class="btn btn-warning "
+                            style="margin-top: -57px; margin-left: 173px !important; width: 40%; color: white;"  (click)= "healthTodayDiscomfort();"><b>DISCOMFORT</b>
+                        </button>
+                    </div>
+                    <div class="col-lg-4 call-div" >
+
+                        <button class="btn "
+                            style="margin-top: -4px; margin-left: -173px !important; width: 40%; background-color:#f20c37de;color: white;"
+                            (click)= "healthTodayBad();"><b>BAD</b> </button>
+                    </div>
+                    <div class="col-lg-4 call-div" id="no">
+                        <button class="btn btn-danger "
+                            style="margin-top: -57px; margin-left: 173px !important; width: 40%; "  (click)= "healthTodayVeryBad();"><b>VERY BAD</b>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="row" style="margin-top: -10px;">
+            <div class="col-6"><button class="btn btn-md btn-primary" (click)="back2();" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></div>
+            <div class="col-6"><button class="btn btn-md btn-primary float-right" (click)="feedBackSubmit()"> Submit</button></div>
+        </div>
+
+    </div>
+
+</div>
+<div *ngIf="div4" >
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-sm-6" style="margin-top: -24px;">
+                <div class="card-box emergency-heading">
+
+                    <div class="inner">
+
+                        <h4 style=" margin-left: 25px; margin-top: -20px;">  EMERGENCY MESSAGE </h4>
+
+                    </div>
+                    <img src="assets/sos.png" alt=""
+                        style="height: 50px; width: 50px; margin-top:-60px ;margin-left: 10px">
+
+                </div>
+            </div>
+            <form [formGroup]="sosForm" style="width: 100%;" >
+            <div class="col-lg-3 col-sm-6" style="margin-top: 0px;">
+                <div class="card-box emergency-message" style="height: 200px; ">
+
+                    <div class="inner">
+                        <h5><b>Ask for Help :</b> </h5>
+                    </div>
+                    <div class="col-lg-4 call-div">
+                       <textarea class="form-control" cols="30" rows="3" placeholder="Enter ablout your problem.." formControlName="emergencyMessage" ></textarea>
+
+                    </div>
+                    <br>
+                    <div class="col-lg-4 call-div">
+                        <button class="btn btn-md btn-primary" (click)="back2()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
+                        <button class="btn btn-md btn-primary float-right" style="margin-left: 213px; margin-top: -33px;" (click)="emergencyMsgSubmit()" > Submit</button>
+                    </div>
+                </div>
+            </div>
+            <br>
+           
+        </form>
+        </div>
+
+       
+
+    </div>
+
+</div>
+
+
+
+<!-- <br><br><br><br><br><br>
+
+<div class="card card-small mb-4">
+    <div class="card-header border-bottom bg-primary">
+      <h6 class="m-0">VC</h6>
+    </div>
+    <div class="card-body p-0 pb-3 text-center">
+
+<div>
+    <video id="Rvideo" class="vc-video" autoplay="autoplay"></video>
+    <video id="Ivideo" class="vc-video vc-my-video" autoplay="autoplay" muted="muted"></video>    
+</div>
+
+    </div>
+  </div> -->
+
+
+  <!-- <div class="modal fade" tabindex="1 " role="dialog " aria-labelledby="exampleModalLabel"
+    aria-hidden="true" [ngStyle]="{'display':display}">
+    <div class="modal-dialog " role="document1">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title" id="ModalLabel ">Live with patient</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding: 0;">
+
+                <video id="Rvideo" class="vc-video" autoplay="autoplay"></video>
+                <video id="Ivideo" class="vc-video vc-my-video" autoplay="autoplay" muted="muted"></video>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div> -->

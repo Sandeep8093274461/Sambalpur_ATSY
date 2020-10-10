@@ -1,0 +1,23 @@
+.call-div {
+    border-radius: 10px;
+    padding: 15px;
+}
+.main-content-container {
+    padding-top: 10px;
+}
+.card .card-header {
+    height: 42px !important;
+    padding-top: 9px;
+}
+.row{
+    padding-bottom: 10px;
+}
+.entryField {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.vid {
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+}
